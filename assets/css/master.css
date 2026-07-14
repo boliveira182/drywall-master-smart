@@ -1,0 +1,45 @@
+ html { scroll-behavior: smooth; }
+  body { font-family: 'IBM Plex Sans', sans-serif; }
+  .font-display { font-family: 'Space Grotesk', sans-serif; }
+  .font-mono { font-family: 'IBM Plex Mono', monospace; letter-spacing: .03em; }
+  .font-sans { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+
+  .blueprint {
+    background-image:
+      linear-gradient(rgba(28,26,22,0.055) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(28,26,22,0.055) 1px, transparent 1px);
+    background-size: 34px 34px;
+  }
+  .blueprint-dark {
+    background-image:
+      linear-gradient(rgba(244,240,231,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(244,240,231,0.06) 1px, transparent 1px);
+    background-size: 34px 34px;
+  }
+
+  a:focus-visible, button:focus-visible, summary:focus-visible {
+    outline: 2px solid #D98F20;
+    outline-offset: 3px;
+  }
+
+  .tick { stroke: #B3AC9C; stroke-width: 1; }
+  .leader { stroke: #8F8879; stroke-width: 1; stroke-dasharray: 3 3; fill: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+  }
+
+  .reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s ease-out, transform .6s ease-out; }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+
+.min-h-90 {
+    min-height: calc(100vh - 106px);
+}
+.icone {   
+    width: 60px;         /* Defina a largura desejada para o ícone */
+  height: 60px;        /* Mantenha a altura igual à largura */
+  object-fit: cover; /* Garante que a imagem não seja distorcida */
+  vertical-align: middle; /* Alinha perfeitamente o ícone com a linha de texto */
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  border-radius: 50%;
+ }

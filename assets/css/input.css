@@ -1,0 +1,7 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@config "../../tailwind.config.js"; /* Ajuste o caminho até o seu arquivo .js */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
