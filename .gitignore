@@ -1,0 +1,14 @@
+# Arquivos do sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Configurações do IDE
+.vscode/
+.idea/
+
+# Binário do Tailwind
+tailwindcss
+tailwind.exe
+tailwindcss.exe
+

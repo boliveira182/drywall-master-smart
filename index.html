@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author"  content="Nexus Logic Tecnologia">
+<meta name="author" content="https://www.nexuslogictech.com.br">
+<meta name="description" content="Execução de forros, sancas, cortineiros e divisórias em drywall com automação residencial embutida: iluminação por cena, sensores de presença e tomadas inteligentes. Atendemos Lavras e região.">
+<title>Drywall Master Smart</title>
+
+<link rel="icon" href="./assets/img/favicon.png" type="image/x-icon">
+
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        plaster: { 50:'#FBF9F5', 100:'#F4F0E7', 200:'#E7E0D1', 300:'#D8CFB9' },
+        graphite: { 900:'#1C1A16', 800:'#26231D', 700:'#37332A', 600:'#4E483C', 500:'#6C6455', 400:'#8F8879', 300:'#B3AC9C', 200:'#D2CCBE' },
+        amber: { 300:'#F6C067', 400:'#EFAA3E', 500:'#D98F20', 600:'#B0701A' },
+        teal:  { 300:'#7FCFC7', 400:'#4AABA0', 500:'#2F8A80', 600:'#226B63' },
+        navy:  { 900:'#12181C', 800:'#182127', 700:'#212D34' },
+        primary: {
+                            50: '#f0f7ff',
+                            100: '#e0effe',
+                            200: '#b9dffd',
+                            300: '#7cc5fc',
+                            400: '#36a9f8',
+                            500: '#0c8ee9',
+                            600: '#0070c7',
+                            700: '#0159a1',
+                            800: '#064b85',
+                            900: '#0b3f6e',
+                        },
+                        accent: {
+                            50: '#f5f7fa',
+                            100: '#ebeef5',
+                            200: '#d2dae5',
+                            300: '#aabbcc',
+                            400: '#7a93aa',
+                            500: '#5a7591',
+                            600: '#465e78',
+                            700: '#394c61',
+                            800: '#324152',
+                            900: '#2d3847',
+                        }
+      },
+      fontFamily: {
+        display: ['"Space Grotesk"', 'system-ui', 'sans-serif'],
+        body: ['"IBM Plex Sans"', 'system-ui', 'sans-serif'],
+        mono: ['"IBM Plex Mono"', 'ui-monospace', 'monospace'],
+        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+      },
+      animation: {
+        'led-pulse': 'ledPulse 3.5s ease-in-out infinite',
+        'draw': 'draw 1.6s ease-out forwards',
+        'rise': 'rise .7s ease-out forwards',
+        'float': 'float 6s ease-in-out infinite',
+                        'float-delayed': 'float 6s ease-in-out 2s infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'slide-up': 'slideUp 0.5s ease-out',
+                        'fade-in': 'fadeIn 0.8s ease-out',
+      },
+      keyframes: {
+        ledPulse: { '0%,100%': { opacity: .55 }, '50%': { opacity: 1 } },
+        draw: { from: { strokeDashoffset: 400 }, to: { strokeDashoffset: 0 } },
+        rise: { from: { opacity: 0, transform: 'translateY(14px)' }, to: { opacity: 1, transform: 'translateY(0)' } },
+        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        }
+      }
+    }
+  }
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  html { scroll-behavior: smooth; }
+  body { font-family: 'IBM Plex Sans', sans-serif; }
+  .font-display { font-family: 'Space Grotesk', sans-serif; }
+  .font-mono { font-family: 'IBM Plex Mono', monospace; letter-spacing: .03em; }
+  .font-sans { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+
+  .blueprint {
+    background-image:
+      linear-gradient(rgba(28,26,22,0.055) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(28,26,22,0.055) 1px, transparent 1px);
+    background-size: 34px 34px;
+  }
+  .blueprint-dark {
+    background-image:
+      linear-gradient(rgba(244,240,231,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(244,240,231,0.06) 1px, transparent 1px);
+    background-size: 34px 34px;
+  }
+
+  a:focus-visible, button:focus-visible, summary:focus-visible {
+    outline: 2px solid #D98F20;
+    outline-offset: 3px;
+  }
+
+  .tick { stroke: #B3AC9C; stroke-width: 1; }
+  .leader { stroke: #8F8879; stroke-width: 1; stroke-dasharray: 3 3; fill: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+  }
+
+  .reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s ease-out, transform .6s ease-out; }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+
+.min-h-90 {
+    min-height: calc(100vh - 106px);
+}
+.icone {   
+    width: 60px;         /* Defina a largura desejada para o ícone */
+  height: 60px;        /* Mantenha a altura igual à largura */
+  object-fit: cover; /* Garante que a imagem não seja distorcida */
+  vertical-align: middle; /* Alinha perfeitamente o ícone com a linha de texto */
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  border-radius: 50%;
+ }
+
+</style>
+</head>
+
+<body class="bg-plaster-50 text-graphite-800 antialiased overflow-x-hidden">
+
+<!-- Trust bar -->
+<div class="bg-navy-900 h-[30px] text-plaster-200 text-xs font-mono py-2 hidden md:block border-b border-white/5">
+  <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+    <div class="flex items-center gap-6 uppercase tracking-wide">
+      <span class="flex items-center gap-2"><i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400 text-amber-400"></i>5.0 no Google</span>
+      <span class="flex items-center gap-2"><i data-lucide="shield-check" class="w-3.5 h-3.5 text-teal-400"></i>Garantia de 2 anos na execução</span>
+      <span class="flex items-center gap-2"><i data-lucide="map-pin" class="w-3.5 h-3.5 text-amber-400"></i>Lavras/MG e região</span>
+    </div>
+    <div class="flex items-center gap-5">
+      <a href="tel:+5535999999999" class="hover:text-white transition">(35) 99999-9999</a>
+      <a href="https://instagram.com/drywallmastersmart" target="_blank" class="hover:text-white transition">@drywallmastersmart</a>
+    </div>
+  </div>
+</div>
+
+<!-- Header -->
+ <header class="sticky top-0 bg-white/95 backdrop-blur-lg shadow-sm z-50 border-b border-gray-100">
+  <div class="max-w-7xl mx-auto px-6 h-[76px] flex items-center justify-between">
+    <a href="#hero" class="flex items-center gap-3">
+     
+          <img class="icone" src="./assets/img/favicon.png" alt="Description of image">
+ 
+      <div class="leading-none">
+        <span class="font-display font-bold text-xl text-graphite-900 tracking-tight block">Drywall Master</span>
+        <span class="font-mono text-[11px] text-amber-600 tracking-[0.2em] uppercase">Smart</span>
+      </div>
+    </a>
+
+    <nav class="hidden lg:flex gap-8 text-sm font-medium text-graphite-600">
+      <a href="#servicos" class="hover:text-graphite-900 transition">Serviços</a>
+      <a href="#portfolio" class="hover:text-graphite-900 transition">Portfólio</a>
+      <a href="#diferenciais" class="hover:text-graphite-900 transition">Diferenciais</a>
+      <a href="#funcionamento" class="hover:text-graphite-900 transition">Como funciona</a>
+      <a href="#por-dentro" class="hover:text-graphite-900 transition">Por dentro do forro</a>
+      <a href="#depoimentos" class="hover:text-graphite-900 transition">Depoimentos</a>
+      <a href="#faq" class="hover:text-graphite-900 transition">FAQ</a>
+    </nav>
+
+    <div class="flex items-center gap-3">
+      <a href="tel:+5535999999999" class="hidden md:flex items-center gap-2 text-graphite-700 hover:text-graphite-900 font-medium text-sm">
+        <i data-lucide="phone" class="w-4 h-4"></i> Ligar
+      </a>
+      <a href="https://wa.me/5535999999999" target="_blank" class="bg-teal-500 text-white px-5 py-3 rounded-md font-semibold text-sm hover:bg-teal-600 transition-all shadow-sm flex items-center gap-2">
+        <i data-lucide="message-circle" class="w-4 h-4"></i>
+        <span class="hidden sm:inline">Pedir orçamento</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- Hero Section com Slider de Portfólio -->
+<section id="hero" class="relative min-h-90 flex items-center py-0 overflow-hidden bg-gradient-to-br from-gray-50 via-white to-primary-50">
+    <!-- Elementos decorativos de fundo -->
+    <div class="absolute inset-0 overflow-hidden">
+        <div class="absolute -top-40 -right-40 w-96 h-96 bg-primary-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse-slow"></div>
+        <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse-slow" style="animation-delay: 2s;"></div>
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary-50 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-6 relative z-10 w-full">
+        <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+            <!-- Coluna de texto -->
+            <div class="text-center lg:text-left">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-primary-200 text-primary-700 font-semibold text-sm mb-6 shadow-sm">
+                    <span class="relative flex h-3 w-3">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                    </span>
+                    Empresa certificada em Lavras/MG
+                </div>
+                
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-black text-gray-900 leading-tight">
+                    Seu ambiente <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-primary-800">perfeito</span> em drywall
+                </h1>
+                
+                <p class="mt-6 text-lg sm:text-xl text-gray-600 leading-relaxed max-w-xl mx-auto lg:mx-0">
+                    Especialistas em <strong class="text-gray-900">forros, paredes, sancas e cortineiros</strong> com um toque de inteligência: integramos <strong class="text-primary-600">automação residencial</strong> para você controlar tudo por voz ou celular.
+                </p>
+
+                <!-- Mini cards de serviços -->
+                <div class="grid grid-cols-3 gap-3 mt-8 max-w-md mx-auto lg:mx-0">
+                    <div class="bg-white p-3 rounded-xl shadow-sm border border-gray-100 text-center hover:shadow-md transition-shadow">
+                        <i data-lucide="layers" class="w-5 h-5 text-primary-600 mx-auto mb-1"></i>
+                        <span class="text-xs font-semibold text-gray-700">Forros</span>
+                    </div>
+                    <div class="bg-white p-3 rounded-xl shadow-sm border border-gray-100 text-center hover:shadow-md transition-shadow">
+                        <i data-lucide="lightbulb" class="w-5 h-5 text-amber-500 mx-auto mb-1"></i>
+                        <span class="text-xs font-semibold text-gray-700">Iluminação</span>
+                    </div>
+                    <div class="bg-white p-3 rounded-xl shadow-sm border border-gray-100 text-center hover:shadow-md transition-shadow">
+                        <i data-lucide="wifi" class="w-5 h-5 text-green-500 mx-auto mb-1"></i>
+                        <span class="text-xs font-semibold text-gray-700">Automação</span>
+                    </div>
+                </div>
+
+                <!-- CTAs -->
+                <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                    <a href="https://wa.me/5535999999999" target="_blank" class="group bg-green-500 text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-green-600 transition-all shadow-xl shadow-green-200 hover:shadow-green-300 hover:-translate-y-1 flex items-center justify-center gap-3">
+                        <i data-lucide="message-circle" class="w-6 h-6"></i>
+                        Pedir Orçamento Grátis
+                        <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                    <a href="#portfolio" class="bg-white text-gray-900 px-8 py-4 rounded-2xl font-bold text-lg hover:bg-gray-50 transition-all border-2 border-gray-200 hover:border-primary-300 flex items-center justify-center gap-3">
+                        <i data-lucide="eye" class="w-5 h-5"></i>
+                        Ver Projetos
+                    </a>
+                </div>
+
+                <!-- Selos de confiança -->
+                <div class="flex items-center gap-6 mt-8 justify-center lg:justify-start text-sm text-gray-500">
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="shield-check" class="w-4 h-4 text-green-500"></i>
+                        Serviço garantido
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="clock" class="w-4 h-4 text-primary-500"></i>
+                        Obra limpa e rápida
+                    </div>
+                </div>
+            </div>
+
+            <!-- Coluna visual - Slider 3D de Portfólio -->
+            <div class="relative hidden lg:block">
+                <!-- Card principal com slider -->
+                <div class="relative z-10 bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100 group">
+                    <!-- Slider de imagens -->
+                    <div class="relative h-96 overflow-hidden">
+                        <!-- Container do slider -->
+                        <div id="hero-slider" class="flex transition-transform duration-700 ease-in-out h-full">
+                            <!-- Slide 1 -->
+                            <div class="min-w-full h-full relative">
+                                <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                                    alt="Forro de gesso com iluminação" 
+                                    class="w-full h-full object-cover">
+                                <div class="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/20 to-transparent p-8 flex flex-col justify-end">
+                                    <span class="bg-primary-600 text-white text-xs font-bold px-3 py-1.5 rounded-full w-fit mb-3">Forro</span>
+                                    <h3 class="text-white text-2xl font-bold">Sala de Estar</h3>
+                                    <p class="text-gray-300 mt-1">Forro liso com iluminação embutida</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Slide 2 -->
+                            <div class="min-w-full h-full relative">
+                                <img src="https://images.unsplash.com/photo-1556912167-f556f1f39fdf?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                                    alt="Sanca com fita LED" 
+                                    class="w-full h-full object-cover">
+                                <div class="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/20 to-transparent p-8 flex flex-col justify-end">
+                                    <span class="bg-amber-500 text-white text-xs font-bold px-3 py-1.5 rounded-full w-fit mb-3">Sanca + LED</span>
+                                    <h3 class="text-white text-2xl font-bold">Quarto Master</h3>
+                                    <p class="text-gray-300 mt-1">Sanca aberta com fita RGB inteligente</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Slide 3 -->
+                            <div class="min-w-full h-full relative">
+                                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                                    alt="Ambiente com automação" 
+                                    class="w-full h-full object-cover">
+                                <div class="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/20 to-transparent p-8 flex flex-col justify-end">
+                                    <span class="bg-green-500 text-white text-xs font-bold px-3 py-1.5 rounded-full w-fit mb-3">Automação</span>
+                                    <h3 class="text-white text-2xl font-bold">Home Office Smart</h3>
+                                    <p class="text-gray-300 mt-1">Iluminação controlada por voz</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Slide 4 -->
+                            <div class="min-w-full h-full relative">
+                                <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                                    alt="Divisória de drywall" 
+                                    class="w-full h-full object-cover">
+                                <div class="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/20 to-transparent p-8 flex flex-col justify-end">
+                                    <span class="bg-purple-500 text-white text-xs font-bold px-3 py-1.5 rounded-full w-fit mb-3">Divisória</span>
+                                    <h3 class="text-white text-2xl font-bold">Sala Integrada</h3>
+                                    <p class="text-gray-300 mt-1">Divisória com isolamento acústico</p>
+                                </div>
+                            </div>
+
+                            <!-- Slide 5 -->
+                            <div class="min-w-full h-full relative">
+                                <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                                    alt="Cortineiro com iluminação" 
+                                    class="w-full h-full object-cover">
+                                <div class="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/20 to-transparent p-8 flex flex-col justify-end">
+                                    <span class="bg-indigo-500 text-white text-xs font-bold px-3 py-1.5 rounded-full w-fit mb-3">Cortineiro</span>
+                                    <h3 class="text-white text-2xl font-bold">Sala de TV</h3>
+                                    <p class="text-gray-300 mt-1">Cortineiro com LED inteligente</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Botões de navegação - AGORA SEMPRE VISÍVEIS -->
+                        <button id="prev-slide" class="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-gray-900 backdrop-blur-sm p-2.5 rounded-full shadow-lg transition-all duration-300 z-20 hover:scale-110 hover:shadow-xl">
+                            <i data-lucide="chevron-left" class="w-5 h-5"></i>
+                        </button>
+                        <button id="next-slide" class="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-gray-900 backdrop-blur-sm p-2.5 rounded-full shadow-lg transition-all duration-300 z-20 hover:scale-110 hover:shadow-xl">
+                            <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                        </button>
+
+                        <!-- Indicadores -->
+                        <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2 z-20">
+                            <button class="slider-dot w-2.5 h-2.5 rounded-full bg-white transition-all duration-300 w-8" data-index="0"></button>
+                            <button class="slider-dot w-2.5 h-2.5 rounded-full bg-white/50 hover:bg-white/80 transition-all duration-300" data-index="1"></button>
+                            <button class="slider-dot w-2.5 h-2.5 rounded-full bg-white/50 hover:bg-white/80 transition-all duration-300" data-index="2"></button>
+                            <button class="slider-dot w-2.5 h-2.5 rounded-full bg-white/50 hover:bg-white/80 transition-all duration-300" data-index="3"></button>
+                            <button class="slider-dot w-2.5 h-2.5 rounded-full bg-white/50 hover:bg-white/80 transition-all duration-300" data-index="4"></button>
+                        </div>
+
+                        <!-- Contador de slides -->
+                        <div class="absolute top-4 right-4 bg-black/50 backdrop-blur-sm text-white text-xs px-3 py-1.5 rounded-full z-20">
+                            <span id="current-slide">1</span>/<span id="total-slides">5</span>
+                        </div>
+                    </div>
+
+                    <!-- Barra de progresso do slider -->
+                    <div class="h-1 bg-gray-100">
+                        <div id="slider-progress" class="h-full bg-primary-600 transition-all duration-300" style="width: 20%"></div>
+                    </div>
+                </div>
+
+                <!-- Card de automação flutuante -->
+                <div class="absolute -top-6 -right-6 bg-white p-4 rounded-2xl shadow-xl border border-gray-100 z-20 animate-float">
+                    <div class="flex items-center gap-3">
+                        <div class="bg-blue-50 p-3 rounded-xl">
+                            <i data-lucide="mic" class="w-6 h-6 text-blue-500"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-400 font-medium">Comando de voz</p>
+                            <p class="font-bold text-gray-900 text-sm">"Alexa, boa noite"</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Círculo decorativo atrás do card -->
+                <div class="absolute -bottom-10 -right-10 w-64 h-64 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full filter blur-2xl opacity-20"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scroll indicator -->
+    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2 text-gray-400">
+        <span class="text-xs font-medium">Role para descobrir</span>
+        <i data-lucide="chevron-down" class="w-5 h-5 animate-bounce"></i>
+    </div>
+</section>
+
+
+    <!-- Serviços Detalhados -->
+    <section id="servicos" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-primary-600 font-bold text-sm tracking-widest uppercase bg-primary-50 px-4 py-2 rounded-full">Nossos Serviços</span>
+                <h2 class="text-4xl md:text-5xl font-black text-gray-900 mt-6">
+                    Do drywall à <span class="text-primary-600">casa inteligente</span>
+                </h2>
+                <p class="mt-4 text-xl text-gray-600">
+                    Executamos sua obra com maestria, agregando tecnologia para um ambiente moderno e funcional.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Serviço 1 -->
+                <div class="group bg-white p-8 rounded-3xl shadow-sm hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:border-primary-200">
+                    <div class="w-16 h-16 bg-gradient-to-br from-primary-100 to-primary-200 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="layers" class="w-8 h-8 text-primary-600"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Drywall Premium</h3>
+                    <p class="text-gray-600 mb-6">
+                        Paredes, tetos, rebaixamentos e divisórias com acabamento impecável. Forros lisos, sancas abertas/fechadas e cortineiros para todos os estilos.
+                    </p>
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-center gap-2 text-sm text-gray-600">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-green-500"></i>
+                            Acabamento nível A
+                        </li>
+                        <li class="flex items-center gap-2 text-sm text-gray-600">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-green-500"></i>
+                            Montagem rápida e limpa
+                        </li>
+                        <li class="flex items-center gap-2 text-sm text-gray-600">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-green-500"></i>
+                            Isolamento acústico
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Serviço 2 -->
+                <div class="group bg-white p-8 rounded-3xl shadow-sm hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:border-amber-200">
+                    <div class="w-16 h-16 bg-gradient-to-br from-amber-100 to-amber-200 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="lightbulb" class="w-8 h-8 text-amber-500"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Iluminação Planejada</h3>
+                    <p class="text-gray-600 mb-6">
+                        Projeto luminotécnico completo: fitas LED, spots, perfis e pendentes perfeitamente integrados à estrutura de gesso.
+                    </p>
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-center gap-2 text-sm text-gray-600">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-green-500"></i>
+                            Criação de cenários
+                        </li>
+                        <li class="flex items-center gap-2 text-sm text-gray-600">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-green-500"></i>
+                            LED de alta eficiência
+                        </li>
+                        <li class="flex items-center gap-2 text-sm text-gray-600">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-green-500"></i>
+                            Valorização do ambiente
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Serviço 3 - Destaque -->
+                <div class="group bg-gradient-to-br from-primary-600 to-primary-800 p-8 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 border-2 border-primary-400 relative overflow-hidden md:col-span-2 lg:col-span-1">
+                    <div class="absolute top-0 right-0 bg-yellow-400 text-primary-900 text-xs font-black px-4 py-2 rounded-bl-2xl">
+                        EXCLUSIVO
+                    </div>
+                    <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform backdrop-blur">
+                        <i data-lucide="smartphone-charging" class="w-8 h-8 text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-3">Automação Residencial</h3>
+                    <p class="text-primary-100 mb-6">
+                        O grande diferencial: sua obra já sai inteligente! Instalamos e configuramos tudo para você controlar por voz ou app.
+                    </p>
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-center gap-2 text-sm text-primary-100">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-green-300"></i>
+                            Interruptores touch/Wi-Fi
+                        </li>
+                        <li class="flex items-center gap-2 text-sm text-primary-100">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-green-300"></i>
+                            Sensores de presença
+                        </li>
+                        <li class="flex items-center gap-2 text-sm text-primary-100">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-green-300"></i>
+                            Rotinas Alexa/Google
+                        </li>
+                        <li class="flex items-center gap-2 text-sm text-primary-100">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-green-300"></i>
+                            Tomadas inteligentes
+                        </li>
+                    </ul>
+                    <a href="https://wa.me/5535999999999" target="_blank" class="inline-flex items-center gap-2 bg-white text-primary-700 px-6 py-3 rounded-xl font-bold hover:bg-primary-50 transition-all">
+                        Quero automatizar
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    <!-- Portfólio / Galeria -->
+    <section id="portfolio" class="py-24 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+                <div>
+                    <span class="text-primary-600 font-bold text-sm tracking-widest uppercase">Portfólio</span>
+                    <h2 class="text-4xl md:text-5xl font-black text-gray-900 mt-4">Trabalhos que inspiram</h2>
+                </div>
+                <a href="https://instagram.com/drywallmastersmart" target="_blank" class="inline-flex items-center gap-2 text-primary-600 font-bold hover:text-primary-800 transition mt-4 md:mt-0">
+                    Ver todos no Instagram
+                    <i data-lucide="instagram" class="w-5 h-5"></i>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="group relative aspect-square rounded-3xl overflow-hidden shadow-lg">
+                    <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Forro de gesso" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-transparent to-transparent flex items-end p-6 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div>
+                            <span class="bg-white/20 backdrop-blur text-white text-xs px-3 py-1 rounded-full">Forro</span>
+                            <h3 class="text-white font-bold text-lg mt-2">Sala de Estar</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="group relative aspect-square rounded-3xl overflow-hidden shadow-lg">
+                    <img src="https://images.unsplash.com/photo-1556912167-f556f1f39fdf?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Sanca iluminada" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-transparent to-transparent flex items-end p-6 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div>
+                            <span class="bg-white/20 backdrop-blur text-white text-xs px-3 py-1 rounded-full">Sanca + LED</span>
+                            <h3 class="text-white font-bold text-lg mt-2">Quarto Master</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="group relative aspect-square rounded-3xl overflow-hidden shadow-lg">
+                    <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Divisória inteligente" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-transparent to-transparent flex items-end p-6 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div>
+                            <span class="bg-white/20 backdrop-blur text-white text-xs px-3 py-1 rounded-full">Automação</span>
+                            <h3 class="text-white font-bold text-lg mt-2">Home Office Smart</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Diferenciais -->
+    <section id="diferenciais" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div>
+                    <span class="text-primary-600 font-bold text-sm tracking-widest uppercase bg-primary-50 px-4 py-2 rounded-full">Por que nos escolher</span>
+                    <h2 class="text-4xl md:text-5xl font-black text-gray-900 mt-6">
+                        Obra + automação: <span class="text-primary-600">sem dor de cabeça</span>
+                    </h2>
+                    <p class="mt-6 text-lg text-gray-600">
+                        Normalmente, você contrata um gesseiro e depois um eletricista. Resultado? Atrasos, fios aparentes e retrabalho. A gente resolve tudo de uma vez.
+                    </p>
+                    
+                    <div class="mt-10 space-y-6">
+                        <div class="flex gap-5">
+                            <div class="flex-shrink-0 w-12 h-12 bg-green-100 rounded-2xl flex items-center justify-center">
+                                <i data-lucide="user-check" class="w-6 h-6 text-green-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold text-gray-900">Único responsável</h4>
+                                <p class="text-gray-600 mt-1">Acaba o jogo de empurra. Somos nós que entregamos tudo pronto.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-5">
+                            <div class="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center">
+                                <i data-lucide="cable" class="w-6 h-6 text-blue-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold text-gray-900">Infraestrutura embutida</h4>
+                                <p class="text-gray-600 mt-1">Fontes, cabos e módulos smart escondidos no forro. Visual 100% limpo.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-5">
+                            <div class="flex-shrink-0 w-12 h-12 bg-purple-100 rounded-2xl flex items-center justify-center">
+                                <i data-lucide="clock" class="w-6 h-6 text-purple-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold text-gray-900">Cronograma otimizado</h4>
+                                <p class="text-gray-600 mt-1">Fechamos o forro com tudo testado e funcionando. Obra mais rápida.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="relative">
+                    <div class="bg-gray-900 rounded-3xl p-10 shadow-2xl relative z-10">
+                        <i data-lucide="quote" class="w-16 h-16 text-gray-700 mb-6"></i>
+                        <p class="text-2xl text-gray-300 font-medium leading-relaxed">
+                            "A gente não entrega só gesso. A gente entrega um <span class="text-primary-400">ambiente inteligente</span>, onde a luz se adapta ao seu momento."
+                        </p>
+                        <div class="mt-8 flex items-center gap-4">
+                            <div class="w-14 h-14 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full flex items-center justify-center text-white font-bold text-xl">
+                                M
+                            </div>
+                            <div>
+                                <p class="text-white font-bold text-lg">Equipe Master Smart</p>
+                                <p class="text-primary-400">Especialistas desde 2018</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute -bottom-6 -right-6 w-full h-full bg-primary-500 rounded-3xl -z-0"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Como funciona -->
+    <section id="funcionamento" class="py-24 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-primary-600 font-bold text-sm tracking-widest uppercase bg-primary-50 px-4 py-2 rounded-full">Passo a passo</span>
+                <h2 class="text-4xl md:text-5xl font-black text-gray-900 mt-6">Como trabalhamos</h2>
+            </div>
+            
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-primary-600 text-white rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-primary-200">
+                        <i data-lucide="message-circle" class="w-10 h-10"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">1. Consultoria</h3>
+                    <p class="text-gray-600">Entenda suas necessidades e sonhos para o ambiente.</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-primary-600 text-white rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-primary-200">
+                        <i data-lucide="ruler" class="w-10 h-10"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">2. Projeto</h3>
+                    <p class="text-gray-600">Medição precisa e planejamento da estrutura e automação.</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-primary-600 text-white rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-primary-200">
+                        <i data-lucide="wrench" class="w-10 h-10"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">3. Execução</h3>
+                    <p class="text-gray-600">Montagem limpa e rápida, já integrando a tecnologia.</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-primary-600 text-white rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-primary-200">
+                        <i data-lucide="smartphone" class="w-10 h-10"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">4. Entrega Smart</h3>
+                    <p class="text-gray-600">Ambiente pronto e configurado no seu celular.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- POR DENTRO DO FORRO -->
+    <section id="por-dentro" class="py-24 bg-plaster-50 border-b border-graphite-200">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="grid lg:grid-cols-2 gap-16 items-start">
+        <div>
+            <span class="font-mono text-xs tracking-[0.15em] uppercase text-amber-600">Por dentro do forro</span>
+            <h2 class="font-display font-bold text-3xl md:text-4xl text-graphite-900 mt-3 leading-tight">
+            A automação entra antes de o forro fechar.
+            </h2>
+            <p class="mt-5 text-lg text-graphite-600">
+            Cada camada da obra é planejada para esconder a tecnologia sem comprometer o acabamento. É por isso que
+            não é preciso quebrar parede depois — tudo já está lá dentro.
+            </p>
+
+            <dl class="mt-10 space-y-6">
+            <div class="flex gap-4 border-l-2 border-graphite-300 pl-5">
+                <dt class="font-mono text-xs text-graphite-400 pt-1 w-8 shrink-0">01</dt>
+                <div>
+                <dt class="font-semibold text-graphite-900">Fiação e módulos posicionados no projeto</dt>
+                <dd class="text-graphite-600 text-sm mt-1">Antes de fechar a placa, mapeamos onde cada sensor, driver e ponto de tomada precisa ficar.</dd>
+                </div>
+            </div>
+            <div class="flex gap-4 border-l-2 border-graphite-300 pl-5">
+                <dt class="font-mono text-xs text-graphite-400 pt-1 w-8 shrink-0">02</dt>
+                <div>
+                <dt class="font-semibold text-graphite-900">Módulos sem fio, sem quebra-quebra</dt>
+                <dd class="text-graphite-600 text-sm mt-1">Sensores e tomadas Wi-Fi/Zigbee aproveitam a fiação existente — sem furar parede pronta.</dd>
+                </div>
+            </div>
+            <div class="flex gap-4 border-l-2 border-graphite-300 pl-5">
+                <dt class="font-mono text-xs text-graphite-400 pt-1 w-8 shrink-0">03</dt>
+                <div>
+                <dt class="font-semibold text-graphite-900">Tudo testado antes de fechar</dt>
+                <dd class="text-graphite-600 text-sm mt-1">Sensor, LED e tomada são acionados e conferidos com o cliente antes da última placa subir.</dd>
+                </div>
+            </div>
+            </dl>
+        </div>
+
+        <div class="bg-white border border-graphite-200 rounded-lg p-7">
+            <p class="font-mono text-xs uppercase tracking-[0.15em] text-graphite-400 mb-5">Rotina típica configurada</p>
+            <div class="space-y-4">
+            <div class="flex items-start gap-4 p-4 rounded-md bg-plaster-50 border border-graphite-200">
+                <i data-lucide="sunrise" class="w-5 h-5 text-amber-500 mt-0.5 shrink-0"></i>
+                <div>
+                <p class="font-semibold text-graphite-900 text-sm">Sensor de presença — corredor e closet</p>
+                <p class="text-sm text-graphite-500 mt-1">Luz acende ao entrar, apaga sozinha após 90s sem movimento.</p>
+                </div>
+            </div>
+            <div class="flex items-start gap-4 p-4 rounded-md bg-plaster-50 border border-graphite-200">
+                <i data-lucide="moon" class="w-5 h-5 text-teal-500 mt-0.5 shrink-0"></i>
+                <div>
+                <p class="font-semibold text-graphite-900 text-sm">Cena "Boa noite" — sala e quarto</p>
+                <p class="text-sm text-graphite-500 mt-1">Um comando de voz apaga tudo e ativa a tomada do ar-condicionado.</p>
+                </div>
+            </div>
+            <div class="flex items-start gap-4 p-4 rounded-md bg-plaster-50 border border-graphite-200">
+                <i data-lucide="plug-zap" class="w-5 h-5 text-graphite-600 mt-0.5 shrink-0"></i>
+                <div>
+                <p class="font-semibold text-graphite-900 text-sm">Tomada inteligente — home office</p>
+                <p class="text-sm text-graphite-500 mt-1">Desliga monitor e carregadores automaticamente às 22h.</p>
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    </section>
+
+    
+    <!-- Depoimentos -->
+    <section id="depoimentos" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-primary-600 font-bold text-sm tracking-widest uppercase bg-primary-50 px-4 py-2 rounded-full">Depoimentos</span>
+                <h2 class="text-4xl md:text-5xl font-black text-gray-900 mt-6">Quem contratou, aprovou</h2>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-gray-50 p-8 rounded-3xl">
+                    <div class="flex text-yellow-400 mb-4 gap-1">
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                    </div>
+                    <p class="text-gray-700 mb-6 italic">"Fizeram o rebaixamento da minha sala e já deixaram a fita LED configurada na Alexa. Obra super limpa. Recomendo!"</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-primary-100 text-primary-600 rounded-full flex items-center justify-center font-bold">R</div>
+                        <div>
+                            <p class="font-bold text-gray-900">Rafael Oliveira</p>
+                            <p class="text-sm text-gray-500">Cliente Residencial</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-50 p-8 rounded-3xl">
+                    <div class="flex text-yellow-400 mb-4 gap-1">
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                    </div>
+                    <p class="text-gray-700 mb-6 italic">"Não precisei chamar eletricista. Eles fizeram a sanca e já instalaram os interruptores touch. Ficou perfeito."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-primary-100 text-primary-600 rounded-full flex items-center justify-center font-bold">M</div>
+                        <div>
+                            <p class="font-bold text-gray-900">Mariana Costa</p>
+                            <p class="text-sm text-gray-500">Projeto Apartamento</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-50 p-8 rounded-3xl">
+                    <div class="flex text-yellow-400 mb-4 gap-1">
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                    </div>
+                    <p class="text-gray-700 mb-6 italic">"Atendimento excelente. Criaram cenas de iluminação que mudaram totalmente o clima da casa."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-primary-100 text-primary-600 rounded-full flex items-center justify-center font-bold">C</div>
+                        <div>
+                            <p class="font-bold text-gray-900">Carlos Henrique</p>
+                            <p class="text-sm text-gray-500">Reforma Sala e Quarto</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- FAQ -->
+<section id="faq" class="py-24 bg-white">
+  <div class="max-w-4xl mx-auto px-6">
+    <div class="mb-12">
+      <span class="font-mono text-xs tracking-[0.15em] uppercase text-teal-600">FAQ</span>
+      <h2 class="font-display font-bold text-3xl md:text-4xl text-graphite-900 mt-3">Dúvidas frequentes</h2>
+    </div>
+
+    <div class="space-y-3">
+      <details class="group bg-plaster-50 p-6 rounded-lg cursor-pointer border border-graphite-200">
+        <summary class="flex justify-between items-center font-semibold text-graphite-900 list-none">
+          Vocês fornecem os materiais?
+          <span class="transition group-open:rotate-45 border border-graphite-300 p-1.5 rounded-md"><i data-lucide="plus" class="w-4 h-4 text-graphite-700"></i></span>
+        </summary>
+        <p class="text-graphite-600 mt-4 leading-relaxed">
+          Somos especialistas na execução. Entregamos uma lista técnica detalhada — gesso, perfis, LEDs e módulos smart — para você comprar com o fornecedor de sua confiança, sem desperdício.
+        </p>
+      </details>
+
+      <details class="group bg-plaster-50 p-6 rounded-lg cursor-pointer border border-graphite-200">
+        <summary class="flex justify-between items-center font-semibold text-graphite-900 list-none">
+          A automação exige quebrar parede?
+          <span class="transition group-open:rotate-45 border border-graphite-300 p-1.5 rounded-md"><i data-lucide="plus" class="w-4 h-4 text-graphite-700"></i></span>
+        </summary>
+        <p class="text-graphite-600 mt-4 leading-relaxed">
+          Não. Usamos módulos sem fio (Wi-Fi/Zigbee) que ficam escondidos no forro ou atrás dos interruptores atuais, aproveitando a fiação já existente.
+        </p>
+      </details>
+
+      <details class="group bg-plaster-50 p-6 rounded-lg cursor-pointer border border-graphite-200">
+        <summary class="flex justify-between items-center font-semibold text-graphite-900 list-none">
+          Dá para automatizar depois, numa casa já pronta?
+          <span class="transition group-open:rotate-45 border border-graphite-300 p-1.5 rounded-md"><i data-lucide="plus" class="w-4 h-4 text-graphite-700"></i></span>
+        </summary>
+        <p class="text-graphite-600 mt-4 leading-relaxed">
+          Sim, mas fica mais simples e mais barato quando é feito junto com a obra de drywall — o forro já esconde a fiação sem precisar reabrir nada.
+        </p>
+      </details>
+
+      <details class="group bg-plaster-50 p-6 rounded-lg cursor-pointer border border-graphite-200">
+        <summary class="flex justify-between items-center font-semibold text-graphite-900 list-none">
+          Posso controlar tudo pela Alexa ou Google Home?
+          <span class="transition group-open:rotate-45 border border-graphite-300 p-1.5 rounded-md"><i data-lucide="plus" class="w-4 h-4 text-graphite-700"></i></span>
+        </summary>
+        <p class="text-graphite-600 mt-4 leading-relaxed">
+          Sim. Entregamos tudo já configurado no seu celular e vinculado à assistente de voz que você usar.
+        </p>
+      </details>
+
+      <details class="group bg-plaster-50 p-6 rounded-lg cursor-pointer border border-graphite-200">
+        <summary class="flex justify-between items-center font-semibold text-graphite-900 list-none">
+          Em quais cidades vocês atendem?
+          <span class="transition group-open:rotate-45 border border-graphite-300 p-1.5 rounded-md"><i data-lucide="plus" class="w-4 h-4 text-graphite-700"></i></span>
+        </summary>
+        <p class="text-graphite-600 mt-4 leading-relaxed">
+          Nossa base é em Lavras/MG e atendemos toda a região. Chame no WhatsApp para confirmar disponibilidade na sua cidade.
+        </p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="py-24 bg-navy-900 relative overflow-hidden">
+  <div class="absolute inset-0 blueprint-dark pointer-events-none"></div>
+  <div class="max-w-4xl mx-auto text-center px-6 relative">
+    <span class="font-mono text-xs tracking-[0.15em] uppercase text-teal-400">Próximo passo</span>
+    <h2 class="font-display font-bold text-3xl md:text-5xl text-white mt-4 mb-6">
+      Pronto para fechar o forro certo da primeira vez?
+    </h2>
+    <p class="text-plaster-300 text-lg mb-10 max-w-xl mx-auto">
+      Mande uma foto do ambiente ou a planta do seu arquiteto. Respondemos com orçamento detalhado em até 1 hora.
+    </p>
+    <div class="flex flex-col sm:flex-row gap-3 justify-center">
+      <a href="https://wa.me/5535999999999" target="_blank" class="inline-flex items-center gap-3 bg-teal-500 text-white px-9 py-4 rounded-md font-semibold text-lg hover:bg-teal-400 transition-all shadow-lg">
+        <i data-lucide="message-circle" class="w-5 h-5"></i> Falar no WhatsApp
+      </a>
+      <a href="tel:+5535999999999" class="inline-flex items-center gap-3 bg-white/5 border border-white/20 text-white px-9 py-4 rounded-md font-semibold text-lg hover:bg-white/10 transition-all">
+        <i data-lucide="phone" class="w-5 h-5"></i> Ligar agora
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-graphite-900 text-graphite-400 py-16">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid md:grid-cols-4 gap-12">
+      <div class="md:col-span-2">
+        <div class="flex items-center gap-3 text-white mb-4">
+          <svg width="30" height="30" viewBox="0 0 34 34" fill="none">
+            <rect x="2" y="6" width="30" height="5" rx="1" fill="#F4F0E7"/>
+            <rect x="6" y="14.5" width="22" height="5" rx="1" fill="#B3AC9C"/>
+            <rect x="10" y="23" width="14" height="5" rx="1" fill="#D98F20"/>
+          </svg>
+          <span class="font-display font-bold text-xl">Drywall Master <span class="text-amber-400">Smart</span></span>
+        </div>
+        <p class="max-w-md text-sm leading-relaxed">
+          Execução de drywall e automação residencial embutida. Transformando ambientes em Lavras e região desde 2018.
+        </p>
+      </div>
+
+      <div>
+        <h4 class="text-white font-display font-semibold mb-4">Contato</h4>
+        <ul class="space-y-3 text-sm">
+          <li class="flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4 text-teal-400"></i>(35) 99999-9999</li>
+          <li class="flex items-center gap-2"><i data-lucide="instagram" class="w-4 h-4 text-teal-400"></i>@drywallmastersmart</li>
+          <li class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4 text-teal-400"></i>Lavras, MG</li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="text-white font-display font-semibold mb-4">Serviços</h4>
+        <ul class="space-y-3 text-sm">
+          <li>Forros e sancas</li>
+          <li>Paredes e divisórias</li>
+          <li>Iluminação LED</li>
+          <li>Automação residencial</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-12 pt-8 border-t border-white/10 text-center text-xs font-mono">
+      <p>&copy; 2026 Drywall Master Smart. Todos os direitos reservados.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- WhatsApp flutuante -->
+<a href="https://wa.me/5535999999999" target="_blank" rel="noopener noreferrer"
+  class="fixed bottom-7 right-7 bg-teal-500 text-white p-4 rounded-full shadow-xl hover:bg-teal-600 hover:scale-105 transition-all z-50 flex items-center justify-center">
+  <i data-lucide="message-circle" class="w-6 h-6"></i>
+  <span class="absolute -top-1 -right-1 flex h-3.5 w-3.5">
+    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+    <span class="relative inline-flex rounded-full h-3.5 w-3.5 bg-amber-400"></span>
+  </span>
+</a>
+
+<script>
+  lucide.createIcons();
+
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('in'); });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('#servicos .rounded-lg, #diferenciais .flex.gap-5, #depoimentos > div > div > div, #portfolio .group').forEach(el => {
+    el.classList.add('reveal');
+    observer.observe(el);
+  });
+
+  document.querySelectorAll('details').forEach(detail => {
+    detail.addEventListener('toggle', function () {
+      if (this.open) {
+        document.querySelectorAll('details').forEach(other => { if (other !== this) other.open = false; });
+      }
+    });
+  });
+
+  // Lógica do Slider da Hero Section
+        document.addEventListener('DOMContentLoaded', () => {
+            const slider = document.getElementById('hero-slider');
+            const slides = slider.children;
+            const prevBtn = document.getElementById('prev-slide');
+            const nextBtn = document.getElementById('next-slide');
+            const dots = document.querySelectorAll('.slider-dot');
+            const currentSlideSpan = document.getElementById('current-slide');
+            const totalSlidesSpan = document.getElementById('total-slides');
+            const progressBar = document.getElementById('slider-progress');
+            
+            let currentSlide = 0;
+            const totalSlides = slides.length;
+            let slideInterval;
+            let isTransitioning = false;
+
+            // Atualiza contador total
+            totalSlidesSpan.textContent = totalSlides;
+
+            const updateSlider = () => {
+                if (isTransitioning) return;
+                isTransitioning = true;
+                
+                // Move o slider
+                slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+                
+                // Atualiza contador
+                currentSlideSpan.textContent = currentSlide + 1;
+                
+                // Atualiza barra de progresso
+                const progress = ((currentSlide + 1) / totalSlides) * 100;
+                progressBar.style.width = `${progress}%`;
+                
+                // Atualiza dots
+                dots.forEach((dot, index) => {
+                    if(index === currentSlide) {
+                        dot.classList.add('w-8', 'bg-white');
+                        dot.classList.remove('bg-white/50');
+                    } else {
+                        dot.classList.remove('w-8', 'bg-white');
+                        dot.classList.add('bg-white/50');
+                    }
+                });
+
+                // Libera a transição após completar
+                setTimeout(() => {
+                    isTransitioning = false;
+                }, 700);
+            };
+
+            const nextSlide = () => {
+                if (isTransitioning) return;
+                currentSlide = (currentSlide + 1) % totalSlides;
+                updateSlider();
+            };
+
+            const prevSlide = () => {
+                if (isTransitioning) return;
+                currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+                updateSlider();
+            };
+
+            // Event Listeners dos botões
+            nextBtn.addEventListener('click', () => {
+                nextSlide();
+                resetInterval();
+            });
+
+            prevBtn.addEventListener('click', () => {
+                prevSlide();
+                resetInterval();
+            });
+
+            // Event Listeners dos dots
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    if (isTransitioning || currentSlide === index) return;
+                    currentSlide = index;
+                    updateSlider();
+                    resetInterval();
+                });
+            });
+
+            // Suporte a gestos touch/swipe
+            let touchStartX = 0;
+            let touchEndX = 0;
+            
+            slider.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            });
+            
+            slider.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            });
+
+            const handleSwipe = () => {
+                const swipeThreshold = 50;
+                if (touchEndX < touchStartX - swipeThreshold) {
+                    nextSlide();
+                    resetInterval();
+                }
+                if (touchEndX > touchStartX + swipeThreshold) {
+                    prevSlide();
+                    resetInterval();
+                }
+            };
+
+            // Autoplay a cada 5 segundos
+            const startInterval = () => {
+                slideInterval = setInterval(nextSlide, 5000);
+            };
+
+            const resetInterval = () => {
+                clearInterval(slideInterval);
+                startInterval();
+            };
+
+            // Pausar autoplay quando mouse estiver sobre o slider
+            slider.addEventListener('mouseenter', () => {
+                clearInterval(slideInterval);
+            });
+
+            slider.addEventListener('mouseleave', () => {
+                startInterval();
+            });
+
+            // Inicializar
+            updateSlider();
+            startInterval();
+        });
+
+</script>
+</body>
+</html>
