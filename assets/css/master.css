@@ -36,10 +36,8 @@
     min-height: calc(100vh - 106px);
 }
 .icone {   
-    width: 60px;         /* Defina a largura desejada para o ícone */
   height: 60px;        /* Mantenha a altura igual à largura */
   object-fit: cover; /* Garante que a imagem não seja distorcida */
   vertical-align: middle; /* Alinha perfeitamente o ícone com a linha de texto */
   transition: transform 0.2s ease, opacity 0.2s ease;
-  border-radius: 50%;
  }
